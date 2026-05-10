@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+{% block title %}Checkout{% endblock %}
+{% block content %}
+<h2>Checkout</h2>
+<div class="row">
+    <div class="col-md-8">
+        <h4>Order Summary</h4>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Product</th>
+                    <th>Price</th>
+                    <th>Qty</th>
+                    <th>Subtotal</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in cart.items.all %}
+                <tr>
+                    <td>{{ item.product.name }}</td>
+                    <td>${{ item.product.price }}</td>
+                    <td>{{ item.quantity }}</td>
+                    <td>${{ item.product.price }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <h5>Total: ${{ cart_total }}</h5>
+    </div>
+    <div class="col-md-4">
+        <h4>Shipping Info</h4>
+        <form method="post">
+            {% csrf_token %}
+            <input type="text" name="full_name" class="form-control mb-2" placeholder="Full Name" required>
+            <input type="email" name="email" class="form-control mb-2" placeholder="Email" required>
+            <input type="text" name="phone" class="form-control mb-2" placeholder="Phone">
+            <input type="text" name="address" class="form-control mb-2" placeholder="Address" required>
+            <input type="text" name="city" class="form-control mb-2" placeholder="City" required>
+            <input type="text" name="country" class="form-control mb-2" placeholder="Country" required>
+            <input type="text" name="postal_code" class="form-control mb-2" placeholder="Postal Code">
+            <button type="submit" class="btn btn-primary w-100">Place Order & Pay</button>
+        </form>
+    </div>
+</div>
+{% endblock %}

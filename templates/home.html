@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Discover Our Products - TradeShop{% endblock %}
+
+{% block content %}
+<div class="text-center mb-5">
+    <h1 class="display-4 fw-bold">🔥 Hot Deals</h1>
+    <p class="lead text-muted">Premium quality at an unbeatable price</p>
+</div>
+
+<div class="row g-4">
+    {% for product in products %}
+    <div class="col-lg-4 col-md-6">
+        <div class="card product-card h-100 shadow-sm" data-product-id="{{ product.id }}">
+            <!-- 3D 旋转容器，替换原来的 product-img-wrapper -->
+            <div class="product-3d-container">
+                <div class="product-3d-inner">
+                    <!-- 正面：图片 -->
+                    <div class="product-3d-front">
+                        <img src="{% static 'pic/pic' %}{{ product.id }}.jpg" class="card-img-top" alt="{{ product.name }}">
+                    </div>
+                    <!-- 背面：可自定义内容（这里展示产品名称与价格） -->
+                    <div class="product-3d-back d-flex flex-column align-items-center justify-content-center">
+                        <h5 class="card-title">{{ product.name }}</h5>
+                        <p class="text-danger fw-bold fs-4">$ {{ product.price }}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="card-body d-flex flex-column">
+                <h5 class="card-title text-center">{{ product.name }}</h5>
+                <p class="text-muted text-center small">High-quality foreign trade product</p>
+                <div class="mt-auto">
+                    <p class="text-center fs-4 fw-bold text-danger mb-3">$ {{ product.price }}</p>
+                    <button class="btn btn-outline-primary w-100 add-to-cart"
+                            data-product-id="{{ product.id }}">
+                        <i class="bi bi-cart-plus"></i> Add to Cart
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% empty %}
+    <div class="col-12 text-center py-5">
+        <p class="text-muted">No products available yet. Please add some products in the admin panel.</p>
+        <a href="{% url 'admin:index' %}" class="btn btn-outline-secondary">Go to Admin</a>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}
